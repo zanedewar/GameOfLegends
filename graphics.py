@@ -15,6 +15,7 @@ index = []
 def init():
     for i, s in enumerate(getPlayers.statsList):
         statsDict[s] = []
+    #st.write(statsDict)
     return statsDict, getPlayers.init()
     
 def getStats(name):
@@ -35,4 +36,19 @@ for i, name in enumerate(names):
     if i == len(names) - 1:
         st.dataframe(df)
         #st.bar_chart(df)
-        
+xAxis = st.selectbox("X-Axis",getPlayers.statsList,index=None,placeholder='X-Axis')
+yAxis = st.selectbox("Y-Axis",getPlayers.statsList,index=None,placeholder='Y-Axis')
+rows = {0: xAxis, 1: yAxis}
+#colors = [(np.random.randint(0,255),np.random.randint(0,255),np.random.randint(0,255))]
+if xAxis != None and yAxis != None:
+    
+    '''while (len(colors) < len(statsDict[yAxis])):
+        colors.append((np.random.randint(0,255),np.random.randint(0,255),np.random.randint(0,255)))
+        #colors.append(np.random.randint(0,255))'''
+
+    chartData = pd.DataFrame([statsDict[xAxis],statsDict[yAxis]],columns=names)
+    chartData = chartData.rename(index=rows)
+    chartData = chartData.T
+    st.write(chartData)
+    
+    st.scatter_chart(data=chartData,x=xAxis,y=yAxis)
