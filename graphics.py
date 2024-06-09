@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup as bs
 from requests_html import HTMLSession
 import streamlit as st
@@ -40,15 +41,19 @@ xAxis = st.selectbox("X-Axis",getPlayers.statsList,index=None,placeholder='X-Axi
 yAxis = st.selectbox("Y-Axis",getPlayers.statsList,index=None,placeholder='Y-Axis')
 rows = {0: xAxis, 1: yAxis}
 #colors = [(np.random.randint(0,255),np.random.randint(0,255),np.random.randint(0,255))]
-if xAxis != None and yAxis != None:
-    
-    '''while (len(colors) < len(statsDict[yAxis])):
-        colors.append((np.random.randint(0,255),np.random.randint(0,255),np.random.randint(0,255)))
-        #colors.append(np.random.randint(0,255))'''
-
+if xAxis and yAxis:
     chartData = pd.DataFrame([statsDict[xAxis],statsDict[yAxis]],columns=names)
     chartData = chartData.rename(index=rows)
     chartData = chartData.T
+    fig, ax = plt.subplots()
+    ax.plot(statsDict[xAxis],statsDict[yAxis],'ko')
+    for i, xy in enumerate(zip(statsDict[xAxis],statsDict[yAxis])):
+        ax.annotate(names[i],xy=xy,textcoords='offset pixels')
+    ax.set(xlabel=xAxis,ylabel=yAxis)
+    #plt.plot(statsDict[xAxis])
     st.write(chartData)
+    #plt.show()
     
-    st.scatter_chart(data=chartData,x=xAxis,y=yAxis)
+    
+    #st.scatter_chart(data=chartData,x=xAxis,y=yAxis)
+    st.pyplot(fig)
