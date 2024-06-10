@@ -11,7 +11,7 @@ headers = {
 }
 playerDict = {}
 statsDict = {}
-statsList = ['KDA', 'CS per Minute', 'Gold Per Minute', 'Gold%', 'Kill Participation']
+statsList = ['KDA', 'CS per Minute', 'Gold Per Minute', 'Gold%', 'Kill Participation', 'Damage Per Minute', 'Damage%', 'Solo kills']
 def init():
     r = requests.get('https://gol.gg/players/list/season-S14/split-Spring/tournament-ALL/', headers=headers)
     #print(r.text)
@@ -34,7 +34,9 @@ def init():
         playerDict[name] = index
     return playerDict
 def getPlayer(name, id):
-    stats = [0,0,0,0,0]
+    stats = []
+    for i in statsList:
+        stats.append(0)
     r = requests.get(f'https://gol.gg/players/player-stats/{id}/season-S14/split-Spring/tournament-ALL/champion-ALL/', headers=headers)
     s = r.text.split('\n')
     def check(checkString, statIndex, i):

@@ -35,6 +35,7 @@ names = st.multiselect(label='Player Select', options=playerDict.keys())
 for i, name in enumerate(names):
     df = getStats(name)
     if i == len(names) - 1:
+        df.rename(columns={'Damage Per Minute': 'DPM'},inplace=True)
         st.dataframe(df)
         #st.bar_chart(df)
 xAxis = st.selectbox("X-Axis",getPlayers.statsList,index=None,placeholder='X-Axis')
