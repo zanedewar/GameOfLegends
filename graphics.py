@@ -38,10 +38,12 @@ for i, name in enumerate(names):
         st.dataframe(df)
         #st.bar_chart(df)
 xAxis = st.selectbox("X-Axis",getPlayers.statsList,index=None,placeholder='X-Axis')
-yList = getPlayers.statsList
-yList.remove(xAxis) 
+yList = []
+for i in getPlayers.statsList:
+    if i == xAxis:
+        continue
+    yList.append(i)
 yAxis = st.selectbox("Y-Axis",yList,index=None,placeholder='Y-Axis')
-st.write(yList)
 rows = {0: xAxis, 1: yAxis}
 #colors = [(np.random.randint(0,255),np.random.randint(0,255),np.random.randint(0,255))]
 if xAxis and yAxis:
@@ -51,12 +53,13 @@ if xAxis and yAxis:
     fig, ax = plt.subplots()
     ax.plot(statsDict[xAxis],statsDict[yAxis],'ko')
     for i, xy in enumerate(zip(statsDict[xAxis],statsDict[yAxis])):
-        ax.annotate(names[i],xy=xy,textcoords='offset pixels',xytext=(5,5))
+        ax.annotate(names[i],xy=xy,textcoords='offset pixels',xytext=(7,7))
     ax.set(xlabel=xAxis,ylabel=yAxis)
     #plt.plot(statsDict[xAxis])
-    st.write(chartData)
+    #st.write(chartData)
     #plt.show()
     
     
     #st.scatter_chart(data=chartData,x=xAxis,y=yAxis)
     st.pyplot(fig)
+    #test
