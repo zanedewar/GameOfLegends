@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup as bs
-from requests_html import HTMLSession
 import streamlit as st
 import getPlayers
 
